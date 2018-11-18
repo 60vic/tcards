@@ -1,0 +1,170 @@
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'js/jquery.min.js') }}" ></script>
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'js/jquery-ui.min.js') }}" ></script>
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'js/jquery.mask.min.js') }}" ></script>                  
+
+<script type=text/javascript>
+  $(function() {
+    $('a#calculate').bind('click', function() {
+      $.getJSON('/_add_numbers', {
+        a: $('input[name="a"]').val(),
+        b: $('input[name="b"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+</script>
+
+<style>
+.ficap { padding: 0px; margin: 0px; width: 150px; clear: both; vertical-align: middle; inline-block;}
+.fi, .ficap {float: left;}
+.ficap, .fi input {padding: 5px; margin: 0px;}
+.b1 {border: 1px solid black; float: left; padding: 5px; height: 100%; width: 32%;}
+.bwrap {height: 50vh;}
+</style>
+
+<div class="bwrap">
+<div class="b1">
+<h1>Каточка позвонившего</h1>
+<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel1"></div>
+<div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob1"></div>
+<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio1"></div>
+<div class="ficap">Роль</div><div class="fi"><select name="role1"></select></div>
+<div class="ficap">Должность</div><div class="fi"><select name="pos1"></select></div>
+<div class="ficap">Организация</div><div class="fi"><input type="text" name="org1"></div>
+<div class="ficap">Организация_</div><div class="fi"><input type="text" name="org_1"></div>
+<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft1"></div>
+<div class="ficap"><button title="Сохраняет карточку в базу" id="save2db" disabled>В базу</button><br>
+<button title="Заполняет пустые поля из карточки" disabled>Из карточки</button></div><div class="fi"><br><button id="search2db">Искать</button></div>
+</div>
+<div class="b1">
+<h1>Список найденного</h1>
+<ul>
+<li>72-02-02;Иван;Блокирует доступ и изменение элементов списка. Блокированный список не может получить фокус через курсор или клавиатуру</li>
+<li>2</li>
+<li>3</li>
+</ul>
+</div>
+<div class="b1">
+<h1>Карточка в базе</h1>
+<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel2" disabled></div>
+<div class="ficap">Мобильный</div><div class="fi"><input type="tel" name="mob2" disabled></div>
+<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio2" disabled></div>
+<div class="ficap">Роль</div><div class="fi"><select name="role2" disabled></select></div>
+<div class="ficap">Должность</div><div class="fi"><select name="pos2" disabled></select></div>
+<div class="ficap">Организация</div><div class="fi"><input type="text" name="org2" disabled></div>
+<div class="ficap">Организация1</div><div class="fi"><input type="text" name="org_2" disabled></div>
+<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft2" disabled></div>
+<div class="ficap"><button>Удалить</button></div><div class="fi"><br><button>Добавить в заявление</button></div>
+</div>
+</div>
+</div>	
+<br style="clear: both;">
+<h1>Заявление позвонившего</h1>
+Request<br>
+<div id="asd"></div>
+
+<script>
+$.getJSON( "_get_init", function( data ) {
+	$.each(data['roles'], function (k,v) {
+		$('select[name="role1"]').append("<option name='"+v+"'>"+v+"</option>");
+		});
+	$.each(data['positions'], function (k,v) {
+		$('select[name="pos1"]').append("<option name='"+v+"'>"+v+"</option>");
+		});	
+  });
+
+//установим маску для полей ввода телефонов  
+$(document).ready(function(){ 
+	$('input[name="mob1"]').mask('+7(000)000-00-00');
+});  
+$(document).ready(function(){ 
+	$('input[name="tel1"]').mask('+7(81100)00-00-00');
+});
+
+  $(function() {
+    $('#save2db').bind('click', function() {
+      $.getJSON('/save2db', {
+        tel: $('input[name="tel1"]').val(),
+        mob: $('input[name="mob1"]').val(),
+        fio: $('input[name="fio1"]').val(),
+        role: $('select[name="role1"]').val(),
+        pos: $('select[name="pos1"]').val(),
+        org: $('input[name="org1"]').val(),
+        org_: $('input[name="org_1"]').val(),
+        soft: $('input[name="soft1"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      return false;
+    });
+  });
+
+  $(function() {
+    $('#search2db').bind('click', function() {
+      $.getJSON('/search2db', {
+        tel: $('input[name="tel1"]').val(),
+        mob: $('input[name="mob1"]').val(),
+        fio: $('input[name="fio1"]').val(),
+        role: $('select[name="role1"]').val(),
+        pos: $('select[name="pos1"]').val(),
+        org: $('input[name="org1"]').val(),
+        org_: $('input[name="org_1"]').val(),
+        soft: $('input[name="soft1"]').val()
+      }, function(data) {
+        $("#result").text(data.result);
+      });
+      $('#save2db').removeAttr('disabled');
+      return false;
+    });
+  });
+
+//динамически меняем маску для города и районов
+$("input[name='tel1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	var v = $("input[name='tel1']").val();
+	$('#asd').text(v);
+	if ( v.slice(0,7) == "+7(8112" )
+	{
+		$("input[name='tel1']").mask('+7(8112)00-00-00');
+	}
+	else 
+	{
+		$("input[name='tel1']").mask('+7(81100)0-00-00');
+	}
+});
+
+//до нажатия поиск добавление в БД неактивно
+$("input[name='mob1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='fio1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='role1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='pos1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='org1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='org_1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+
+$("input[name='soft1']").on('input', function() {
+	$('#save2db').prop('disabled',true);
+	});
+	
+</script>
