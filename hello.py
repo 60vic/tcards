@@ -25,24 +25,25 @@ def add_numbers():
 def index():
     return render_template('index.html')
     
-@app.route('/search2db')
+@app.route('/search2db', methods = ['POST'])
 def search2db():
-	tel = request.args.get('tel')
-	mob = request.args.get('mob')
-	fio = request.args.get('fio')
-	role = request.args.get('role')
-	pos = request.args.get('pos')
-	org = request.args.get('org')
-	org_ = request.args.get('org_')
-	soft = request.args.get('soft')
+	tel = request.args.get('tel','')
+	mob = request.args.get('mob','')
+	fio = request.args.get('fio','')
+	role = request.args.get('role','')
+	pos = request.args.get('pos','')
+	org = request.args.get('org','')
+	org_ = request.args.get('org_','')
+	soft = request.args.get('soft','')
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND org_ like ? AND soft  like ?',
+	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND org_ like ? AND soft  like ? LIMIT 10',
 	("%"+tel+"%","%"+mob+"%","%"+fio+"%","%"+role+"%","%"+pos+"%","%"+org+"%","%"+org_+"%","%"+soft+"%"))
 	result = cur.fetchall()
 	conn.close()
 	return jsonify(result = result)
+
 
 @app.route('/save2db')
 def save2db():

@@ -30,14 +30,16 @@
 <div class="bwrap">
 <div class="b1">
 <h1>Каточка позвонившего</h1>
-<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel1"></div>
-<div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob1"></div>
-<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio1"></div>
-<div class="ficap">Роль</div><div class="fi"><select name="role1"></select></div>
-<div class="ficap">Должность</div><div class="fi"><select name="pos1"></select></div>
-<div class="ficap">Организация</div><div class="fi"><input type="text" name="org1"></div>
-<div class="ficap">Организация_</div><div class="fi"><input type="text" name="org_1"></div>
-<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft1"></div>
+<form id="form1">
+<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel"></div>
+<div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob"></div>
+<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio"></div>
+<div class="ficap">Роль</div><div class="fi"><select name="role"></select></div>
+<div class="ficap">Должность</div><div class="fi"><select name="pos"></select></div>
+<div class="ficap">Организация</div><div class="fi"><input type="text" name="org"></div>
+<div class="ficap">Организация_</div><div class="fi"><input type="text" name="org_"></div>
+<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft"></div>
+</form>
 <div class="ficap"><button title="Сохраняет карточку в базу" id="save2db" disabled>В базу</button><br>
 <button title="Заполняет пустые поля из карточки" disabled>Из карточки</button></div><div class="fi"><br><button id="search2db">Искать</button></div>
 </div>
@@ -71,19 +73,19 @@ Request<br>
 <script>
 $.getJSON( "_get_init", function( data ) {
 	$.each(data['roles'], function (k,v) {
-		$('select[name="role1"]').append("<option name='"+v+"'>"+v+"</option>");
+		$('select[name="role"]').append("<option name='"+v+"'>"+v+"</option>");
 		});
 	$.each(data['positions'], function (k,v) {
-		$('select[name="pos1"]').append("<option name='"+v+"'>"+v+"</option>");
+		$('select[name="pos"]').append("<option name='"+v+"'>"+v+"</option>");
 		});	
   });
 
 //установим маску для полей ввода телефонов  
 $(document).ready(function(){ 
-	$('input[name="mob1"]').mask('+7(000)000-00-00');
+	$('input[name="mob"]').mask('+7(000)000-00-00');
 });  
 $(document).ready(function(){ 
-	$('input[name="tel1"]').mask('+7(81100)00-00-00');
+	$('input[name="tel"]').mask('+7(81100)00-00-00');
 });
 
   $(function() {
@@ -104,37 +106,29 @@ $(document).ready(function(){
     });
   });
 
-  $(function() {
-    $('#search2db').bind('click', function() {
-      $.getJSON('/search2db', {
-        tel: $('input[name="tel1"]').val(),
-        mob: $('input[name="mob1"]').val(),
-        fio: $('input[name="fio1"]').val(),
-        role: $('select[name="role1"]').val(),
-        pos: $('select[name="pos1"]').val(),
-        org: $('input[name="org1"]').val(),
-        org_: $('input[name="org_1"]').val(),
-        soft: $('input[name="soft1"]').val()
-      }, function(data) {
-        $("#result").text(data.result);
-      });
-      $('#save2db').removeAttr('disabled');
-      return false;
-    });
-  });
+$('#search2db').bind('click', function() {
+	//alert($('#form1').serialize());
+	$.post('/search2db',
+	$('#form1').serialize(),
+	function(data) {
+		$("#result").text(data.result);
+	});
+	$('#save2db').removeAttr('disabled');
+});
+  
 
 //динамически меняем маску для города и районов
-$("input[name='tel1']").on('input', function() {
+$("input[name='tel']").on('input', function() {
 	$('#save2db').prop('disabled',true);
-	var v = $("input[name='tel1']").val();
+	var v = $("input[name='tel']").val();
 	$('#asd').text(v);
 	if ( v.slice(0,7) == "+7(8112" )
 	{
-		$("input[name='tel1']").mask('+7(8112)00-00-00');
+		$("input[name='tel']").mask('+7(8112)00-00-00');
 	}
 	else 
 	{
-		$("input[name='tel1']").mask('+7(81100)0-00-00');
+		$("input[name='tel']").mask('+7(81100)0-00-00');
 	}
 });
 
