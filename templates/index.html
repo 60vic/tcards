@@ -88,26 +88,15 @@ $(document).ready(function(){
 	$('input[name="tel"]').mask('+7(81100)00-00-00');
 });
 
-  $(function() {
-    $('#save2db').bind('click', function() {
-      $.getJSON('/save2db', {
-        tel: $('input[name="tel1"]').val(),
-        mob: $('input[name="mob1"]').val(),
-        fio: $('input[name="fio1"]').val(),
-        role: $('select[name="role1"]').val(),
-        pos: $('select[name="pos1"]').val(),
-        org: $('input[name="org1"]').val(),
-        org_: $('input[name="org_1"]').val(),
-        soft: $('input[name="soft1"]').val()
-      }, function(data) {
-        $("#result").text(data.result);
-      });
-      return false;
-    });
-  });
+$('#save2db').bind('click', function() {
+	$.post('/save2db',
+	$('#form1').serialize(),
+	function(data) {
+		$("#result").text(data.result);
+	});
+});
 
 $('#search2db').bind('click', function() {
-	//alert($('#form1').serialize());
 	$.post('/search2db',
 	$('#form1').serialize(),
 	function(data) {
