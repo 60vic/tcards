@@ -100,7 +100,10 @@ $('#search2db').bind('click', function() {
 	$.post('/search2db',
 	$('#form1').serialize(),
 	function(data) {
-		$("#result").text(data.result);
+		//alert($.parseJSON(data));
+		$.each(data['result'], function (k) {
+			alert(k['fio']);	
+		});
 	});
 	$('#save2db').removeAttr('disabled');
 });
