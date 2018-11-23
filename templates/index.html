@@ -54,6 +54,7 @@
 </div>
 <div class="b3">
 <h1>Карточка в базе</h1>
+<div class="ficap">Id</div><div class="fi"><input type="text" name="rowid2" disabled></div>
 <div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel2" disabled></div>
 <div class="ficap">Мобильный</div><div class="fi"><input type="tel" name="mob2" disabled></div>
 <div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio2" disabled></div>
@@ -156,7 +157,19 @@ $('#search2db').bind('click', function() {
 		});
 		$('.drid').bind('click',function() {
 			$("input[name='tel2']").val($(this).text());
-			$.post('/get2rowid',{"rowid": $(this).text()}, function(data) {});
+			$.post('/get2rowid',{"rowid": $(this).text()}, function(data) {
+				$.each(data['result'], function (k,v) {
+					$("input[name='tel2']").val(v["tel"]);
+					$("input[name='mob2']").val(v["mob"]);
+					$("input[name='fio2']").val(v["fio"]);
+					$("input[name='org2']").val(v["org"]);
+					$("input[name='org_2']").val(v["org_"]);
+					$("input[name='role2']").val(v["role"]);
+					$("input[name='pos2']").val(v["pos"]);
+					$("input[name='soft2']").val(v["soft"]);
+					$("input[name='rowid2']").val(v["rowid"]);
+				});
+			});
 		});
 	});
 	$('#save2db').removeAttr('disabled');

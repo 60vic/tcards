@@ -31,7 +31,7 @@ def get2rowid():
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT * FROM cards WHERE rowid = ?',
+	cur.execute('SELECT rowid,* FROM cards WHERE rowid = ?',
 	(rowid,))
 	result = cur.fetchall()
 	conn.close()
