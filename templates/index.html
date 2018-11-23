@@ -23,7 +23,10 @@
 .ficap { padding: 0px; margin: 0px; width: 150px; clear: both; vertical-align: middle; inline-block;}
 .fi, .ficap {float: left;}
 .ficap, .fi input {padding: 5px; margin: 0px;}
-.b1 {border: 1px solid black; float: left; padding: 5px; height: 100%; width: 32%;}
+.b1,.b2,.b3 {border: 1px solid black; float: left; padding: 5px; height: 100%; }
+.b1 {width: 25%;}
+.b2 {width: 46%;}
+.b3 {width: 25%;}
 .bwrap {height: 50vh;}
 </style>
 
@@ -43,15 +46,13 @@
 <div class="ficap"><button title="Сохраняет карточку в базу" id="save2db" disabled>В базу</button><br>
 <button title="Заполняет пустые поля из карточки" disabled>Из карточки</button></div><div class="fi"><br><button id="search2db">Искать</button></div>
 </div>
-<div class="b1">
+<div class="b2">
 <h1>Список найденного</h1>
-<ul>
-<li>72-02-02;Иван;Блокирует доступ и изменение элементов списка. Блокированный список не может получить фокус через курсор или клавиатуру</li>
-<li>2</li>
-<li>3</li>
-</ul>
+<table id="slist">
+<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
+</table>
 </div>
-<div class="b1">
+<div class="b3">
 <h1>Карточка в базе</h1>
 <div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel2" disabled></div>
 <div class="ficap">Мобильный</div><div class="fi"><input type="tel" name="mob2" disabled></div>
@@ -88,6 +89,7 @@ $(document).ready(function(){
 	$('input[name="tel"]').mask('+7(81100)00-00-00');
 });
 
+//сохранение
 $('#save2db').bind('click', function() {
 	$.post('/save2db',
 	$('#form1').serialize(),
@@ -96,14 +98,16 @@ $('#save2db').bind('click', function() {
 	});
 });
 
+//поиск
 $('#search2db').bind('click', function() {
 	$.post('/search2db',
 	$('#form1').serialize(),
 	function(data) {
-		//alert($.parseJSON(data));
-		$.each(data['result'], function (k) {
-			alert(k['fio']);	
+		$('#slist .dtr').remove();
+		$.each(data['result'], function (k,v) {
+			$('#slist').append(`<tr class="dtr"><td class="drid">${v["rowid"]}</td><td>${v["tel"]}</td>td><td>${v["mob"]}</td>td><td>${v["fio"]}</td>td><td>${v["org"]}</td>td></li>`);
 		});
+		
 	});
 	$('#save2db').removeAttr('disabled');
 });
