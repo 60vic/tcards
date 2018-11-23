@@ -156,7 +156,7 @@ $('#search2db').bind('click', function() {
 		});
 		$('.drid').bind('click',function() {
 			$("input[name='tel2']").val($(this).text());
-			alert($(this).text());
+			$.post('/get2rowid',{"rowid": $(this).text()}, function(data) {});
 		});
 	});
 	$('#save2db').removeAttr('disabled');

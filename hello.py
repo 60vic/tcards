@@ -27,7 +27,7 @@ def index():
     
 @app.route('/get2rowid', methods = ['POST'])
 def get2rowid():
-	rowid = request.form.get('rowid','')
+	rowid = int(request.form['rowid'])
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
