@@ -25,6 +25,19 @@ def add_numbers():
 def index():
     return render_template('index.html')
     
+@app.route('/get2rowid', methods = ['POST'])
+def get2rowid():
+	rowid = request.form.get('rowid','')
+	conn = sqlite3.connect('site.db')
+	conn.row_factory = dict_factory
+	cur = conn.cursor()
+	cur.execute('SELECT * FROM cards WHERE rowid = ?',
+	(rowid,))
+	result = cur.fetchall()
+	conn.close()
+	return jsonify(result = result)
+
+
 @app.route('/search2db', methods = ['POST'])
 def search2db():
 	tel = request.form.get('tel','')

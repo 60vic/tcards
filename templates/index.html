@@ -98,19 +98,7 @@ $('#save2db').bind('click', function() {
 	});
 });
 
-//поиск
-$('#search2db').bind('click', function() {
-	$.post('/search2db',
-	$('#form1').serialize(),
-	function(data) {
-		$('#slist .dtr').remove();
-		$.each(data['result'], function (k,v) {
-			$('#slist').append(`<tr class="dtr"><td class="drid">${v["rowid"]}</td><td>${v["tel"]}</td>td><td>${v["mob"]}</td>td><td>${v["fio"]}</td>td><td>${v["org"]}</td>td></li>`);
-		});
-		
-	});
-	$('#save2db').removeAttr('disabled');
-});
+
   
 
 //динамически меняем маску для города и районов
@@ -156,5 +144,22 @@ $("input[name='org_1']").on('input', function() {
 $("input[name='soft1']").on('input', function() {
 	$('#save2db').prop('disabled',true);
 	});
+
+//поиск
+$('#search2db').bind('click', function() {
+	$.post('/search2db',
+	$('#form1').serialize(),
+	function(data) {
+		$('#slist .dtr').remove();
+		$.each(data['result'], function (k,v) {
+			$('#slist').append(`<tr class="dtr"><td class="drid">${v["rowid"]}</td><td>${v["tel"]}</td>td><td>${v["mob"]}</td>td><td>${v["fio"]}</td>td><td>${v["org"]}</td>td></li>`);
+		});
+		$('.drid').bind('click',function() {
+			$("input[name='tel2']").val($(this).text());
+			alert($(this).text());
+		});
+	});
+	$('#save2db').removeAttr('disabled');
+});
 	
 </script>
