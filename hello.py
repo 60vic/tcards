@@ -41,7 +41,7 @@ def carddel():
 	(rowid,))
 	conn.commit()
 	conn.close()
-	return jsonify(result = 'ok')
+	return jsonify(reply={'good': 'card deleted'})
     
 @app.route('/get2rowid', methods = ['POST'])
 def get2rowid():
@@ -99,6 +99,13 @@ def save2db():
 		conn.commit()
 		return jsonify(reply={'good': 'card updated'})
 	else:
+		cur = conn.cursor()
+		cur.execute('SELECT rowid FROM cards WHERE tel = ?',(tel,))
+		if tel and len(cur.fetchall()) > 0:
+			return jsonify(reply={'error': 'phone in base, load a card'})
+		cur.execute('SELECT rowid FROM cards WHERE mob = ?',(mob,))
+		if mob and len(cur.fetchall()) > 0:
+			return jsonify(reply={'error': 'mob in base, load a card'})
 		conn.execute('INSERT INTO cards VALUES (?,?,?,?,?,?,?,?)',(tel,mob,fio,role,pos,org,org_,soft))
 		conn.commit()
 		return jsonify(reply={'good': 'card added'})
