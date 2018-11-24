@@ -1,3 +1,4 @@
+//начальная инициализация
 $.getJSON( "_get_init", function( data ) {
 	$.each(data['roles'], function (k,v) {
 		$('#form1 select[name="role"]').append("<option name='"+v+"'>"+v+"</option>");
@@ -12,6 +13,8 @@ $.getJSON( "_get_init", function( data ) {
 		});		
   });
 
+
+//вспомогательные функции
 function notifymy(data) {
 	if (data['reply']['error']) {
 		$.notify(data['reply']['error'], "error");

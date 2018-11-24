@@ -1,3 +1,6 @@
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/jquery.min.js') }}" ></script>
 <script type = "text/javascript" 
@@ -6,7 +9,165 @@
          src = "{{ url_for('static', filename = 'js/jquery.mask.min.js') }}" ></script>
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/notify.min.js') }}" ></script>                            
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'js/bootstrap.min.js') }}" ></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+</head>
 
+<div class="container-fluid">
+	<h1>My First Bootstrap Page</h1>
+	<p>This is some text.</p>
+	<div class="row">
+		<div class="col-lg-4" style="background-color:lavender;">
+			<h1>Каточка позвонившего</h1>
+			<form id="form1" class="form-horizontal">
+				<div class="form-group row">
+					<div class="col-sm-12">
+						<button type="reset" class="btn btn-default">Очистка</button>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Id:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="rowid" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Телефон:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="tel">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Мобильный:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="mob">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ФИО:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="fio">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Роль:</label>
+					<div class="col-sm-10">
+						<select class="custom-select" name="role"></select>
+					</div>	
+				</div>			
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Должность:</label>
+					<div class="col-sm-10">
+						<select class="custom-select" name="pos"></select>
+					</div>	
+				</div>			
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Организация:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="org">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Организация_:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="org_">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ПО:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="soft">
+					</div>	
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-6">
+						<button title="Сохраняет карточку в базу" class="btn btn-default" id="save2db" type="button">В базу</button>
+					</div>	
+					<div class="col-sm-6">
+						<button id="search2db" class="btn btn-default" type="button">Искать</button>
+					</div>	
+				</div>
+			</form>
+		</div>	
+		<div class="col-lg-4" style="background-color:lavender;">
+			<h1>Список найденного</h1>
+			<table id="slist" class="table">
+			<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
+			</table>
+		</div>
+		<div class="col-lg-4" style="background-color:lavender;">
+			<h1>Каточка позвонившего</h1>
+			<form id="form2" class="form-horizontal">
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Id:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="rowid" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Телефон:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="tel" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Мобильный:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="mob" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ФИО:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="fio" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Роль:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="role" readonly>
+					</div>	
+				</div>			
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Должность:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="pos" readonly>
+					</div>	
+				</div>			
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Организация:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="org" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">Организация_:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="org_" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-2 col-form-label">ПО:</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control form-control-sm" name="soft" readonly>
+					</div>	
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-4">
+						<button id="carddel" class="btn btn-default" type="button">Удалить</button>
+					</div>	
+					<div class="col-sm-4">
+						<button id="card2to1" class="btn btn-default" type="button">Перенести карту 1</button>
+					</div>	
+					<div class="col-sm-4">
+						<button id="card2req" class="btn btn-default" type="button">Перенести в заявление</button>
+					</div>	
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <style>
 body {font-size: 13px;}	
@@ -25,48 +186,6 @@ input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 #slist td {border-top: 1px solid #1E90FF;}
 </style>
 
-<div class="bwrap">
-<div class="b1">
-<h1>Каточка позвонившего</h1>
-<form id="form1">
-<div class="ficap"><button type="reset">Очистка</button></div>
-<div class="ficap">Id</div><div class="fi"><input type="text" name="rowid" readonly></div>
-<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel"></div>
-<div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob"></div>
-<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio"></div>
-<div class="ficap">Роль</div><div class="fi"><select name="role"></select></div>
-<div class="ficap">Должность</div><div class="fi"><select name="pos"></select></div>
-<div class="ficap">Организация</div><div class="fi"><input type="text" name="org"></div>
-<div class="ficap">Организация_</div><div class="fi"><input type="text" name="org_"></div>
-<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft"></div>
-</form>
-<div class="ficap"><button title="Сохраняет карточку в базу" id="save2db" disabled>В базу</button><br>
-</div><div class="fi"><br><button id="search2db">Искать</button></div>
-</div>
-<div class="b2">
-<h1>Список найденного</h1>
-<table id="slist">
-<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
-</table>
-</div>
-<div class="b3">
-<h1>Карточка в базе</h1>
-<form id="form2">
-<div class="ficap">Id</div><div class="fi"><input type="text" name="rowid" readonly></div>
-<div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel" readonly></div>
-<div class="ficap">Мобильный</div><div class="fi"><input type="tel" name="mob" readonly></div>
-<div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio" readonly></div>
-<div class="ficap">Роль</div><div class="fi"><select name="role" readonly></select></div>
-<div class="ficap">Должность</div><div class="fi"><select name="pos" readonly></select></div>
-<div class="ficap">Организация</div><div class="fi"><input type="text" name="org" readonly></div>
-<div class="ficap">Организация1</div><div class="fi"><input type="text" name="org_" readonly></div>
-<div class="ficap">ПО</div><div class="fi"><input type="text" name="soft" readonly></div>
-</form>
-<div class="ficap"><button id="carddel">Удалить</button></div><div class="fi"><br><button id="card2to1">Перенести карту 1</button></div>
-<div class="ficap"></div><div class="fi"><br><button id="card2req">Перенести в заявление</button></div>
-</div>
-</div>
-</div>	
 <br style="clear: both;">
 <h1>Заявление позвонившего</h1>
 <form id="form3">
