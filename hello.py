@@ -78,6 +78,9 @@ def search2db():
 
 @app.route('/save2db', methods = ['POST'])
 def save2db():
+	rowid = request.form.get('rowid','')
+	if rowid:
+		rowid = int(rowid)
 	tel = request.form.get('tel','')
 	mob = request.form.get('mob','')
 	fio = request.form.get('fio','')
@@ -88,21 +91,15 @@ def save2db():
 	soft = request.form.get('soft','')
 	conn = sqlite3.connect('site.db')
 	if not tel and not mob:
-		return jsonify(error='phone not present')
-	'''
-	cur = conn.cursor()
-	cur.execute('SELECT rowid FROM cards WHERE tel = ?',(tel,))
-	if len(cur.fetchall()) > 0 and tel:
-		return jsonify(error='tel in base')
-	cur.execute('SELECT rowid FROM cards WHERE mob = ?',(mob,))
-	if len(cur.fetchall()) > 0 and mob:
-		return jsonify(error='mob in base')
-	'''
+		return jsonify(reply={'error': 'phone not present'})
 	if not fio:
-		return jsonify(error='fio is empty')	
-	conn.execute('INSERT INTO cards VALUES (?,?,?,?,?,?,?,?)',
-	(tel,mob,fio,role,pos,org,org_,soft))
-	conn.commit()
+		return jsonify(reply={'error': 'fio is empty'})	
+	if rowid:
+		conn.execute('UPDATE cards SET tel = ?, mob = ?, fio = ?,role = ?, pos = ?,org = ?,org_ = ?,soft = ? WHERE rowid = ?',(tel,mob,fio,role,pos,org,org_,soft,rowid))
+		conn.commit()
+		return jsonify(reply={'good': 'card updated'})
+	else:
+		conn.execute('INSERT INTO cards VALUES (?,?,?,?,?,?,?,?)',(tel,mob,fio,role,pos,org,org_,soft))
+		conn.commit()
+		return jsonify(reply={'good': 'card added'})
 	conn.close()
-	return jsonify(error = '0')
-	#return jsonify(result=[mob,tel,fio,role,pos,org,org_,soft])

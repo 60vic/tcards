@@ -39,6 +39,7 @@ input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 <h1>Каточка позвонившего</h1>
 <form id="form1">
 <div class="ficap"><button type="reset">Очистка</button></div>
+<div class="ficap">Id</div><div class="fi"><input type="text" name="rowid" readonly></div>
 <div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel"></div>
 <div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob"></div>
 <div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio"></div>
@@ -89,6 +90,15 @@ $.getJSON( "_get_init", function( data ) {
 		});	
   });
 
+function notifymy(data) {
+	if (data['reply']['error']) {
+		$.notify(data['error'], "error");
+	}
+	if (data['reply']['good']) {
+		$.notify(data['reply']['good'], "success");
+	}
+}
+
 //установим маску для полей ввода телефонов  
 $(document).ready(function(){ 
 	$('#form1 input[name="mob"]').mask('+7(000)000-00-00');
@@ -100,14 +110,9 @@ $(document).ready(function(){
 //сохранение
 $('#save2db').bind('click', function() {
 	$.post('/save2db',
-	$('#form1').serialize(),
-	function(data) {
-		if (data['error'] != '0') {
-			$.notify(data['error'], "error");
-		}
-		else {
-			$.notify("Карточка сохранена", "success");
-		}
+	$('#form1').serialize(), 
+	function (data) {
+		notifymy(data);
 	});
 });
 
@@ -153,6 +158,7 @@ $('#card2to1').bind('click', function() {
 
 //поиск
 $('#search2db').bind('click', function() {
+	$('#form1 input[name="rowid"]').val("");
 	$.post('/search2db',
 	$('#form1').serialize(),
 	function(data) {
