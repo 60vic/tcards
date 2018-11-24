@@ -12,13 +12,14 @@
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/bootstrap.min.js') }}" ></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
 </head>
 
 <div class="container-fluid">
 	<h1>My First Bootstrap Page</h1>
 	<p>This is some text.</p>
 	<div class="row">
-		<div class="col-lg-4" style="background-color:lavender;">
+		<div class="col-lg-3" style="background-color:lavender;">
 			<h1>Каточка позвонившего</h1>
 			<form id="form1" class="form-horizontal">
 				<div class="form-group row">
@@ -27,56 +28,56 @@
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Id:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Id:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="rowid" readonly>
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Телефон:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Телефон:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="tel">
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Мобильный:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Мобильный:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="mob">
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">ФИО:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">ФИО:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="fio">
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Роль:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Роль:</label>
+					<div class="col-sm-9">
 						<select class="custom-select" name="role"></select>
 					</div>	
 				</div>			
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Должность:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Должность:</label>
+					<div class="col-sm-9">
 						<select class="custom-select" name="pos"></select>
 					</div>	
 				</div>			
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Организация:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Организация:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="org">
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">Организация_:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">Организация_:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="org_">
 					</div>	
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">ПО:</label>
-					<div class="col-sm-10">
+					<label class="col-sm-3 col-form-label">ПО:</label>
+					<div class="col-sm-9">
 						<input type="text" class="form-control form-control-sm" name="soft">
 					</div>	
 				</div>
@@ -90,13 +91,13 @@
 				</div>
 			</form>
 		</div>	
-		<div class="col-lg-4" style="background-color:lavender;">
+		<div class="col-lg-6" style="background-color:lavender;">
 			<h1>Список найденного</h1>
 			<table id="slist" class="table">
 			<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
 			</table>
 		</div>
-		<div class="col-lg-4" style="background-color:lavender;">
+		<div class="col-lg-3" style="background-color:lavender;">
 			<h1>Каточка позвонившего</h1>
 			<form id="form2" class="form-horizontal">
 				<div class="form-group row">
@@ -169,22 +170,6 @@
 	</div>
 </div>
 
-<style>
-body {font-size: 13px;}	
-.ficap { padding: 0px; margin: 0px; width: 150px; clear: both; vertical-align: middle; inline-block;}
-.fi, .ficap {float: left;}
-.ficap, .fi,.fi input {padding: 2px; margin: 0px;}
-.b1,.b2,.b3 {border: 1px solid black; float: left; padding: 5px; height: 100%; }
-.b1 {width: 25%;}
-.b2 {width: 46%;}
-.b3 {width: 25%;}
-.bwrap {height: 50vh;}
-input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
-#slist {border-collapse: collapse;}
-#slist td,#slist th {border-left: 1px solid #1E90FF;border-right: 1px solid #1E90FF;}
-#slist th {border-bottom: 1px solid #1E90FF;}
-#slist td {border-top: 1px solid #1E90FF;}
-</style>
 
 <br style="clear: both;">
 <h1>Заявление позвонившего</h1>
@@ -194,7 +179,8 @@ input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 </table>
 <select name="reqcat"></select><br>
 <textarea></textarea>
-</form>	
+</form>
+	
 
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/my.js') }}" ></script> 
