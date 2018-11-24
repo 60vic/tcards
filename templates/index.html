@@ -3,7 +3,9 @@
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/jquery-ui.min.js') }}" ></script>
 <script type = "text/javascript" 
-         src = "{{ url_for('static', filename = 'js/jquery.mask.min.js') }}" ></script>                  
+         src = "{{ url_for('static', filename = 'js/jquery.mask.min.js') }}" ></script>
+<script type = "text/javascript" 
+         src = "{{ url_for('static', filename = 'js/notify.min.js') }}" ></script>                            
 
 <script type=text/javascript>
   $(function() {
@@ -100,7 +102,12 @@ $('#save2db').bind('click', function() {
 	$.post('/save2db',
 	$('#form1').serialize(),
 	function(data) {
-		$("#result").text(data.result);
+		if (data['error'] != '0') {
+			$.notify(data['error'], "error");
+		}
+		else {
+			$.notify("Карточка сохранена", "success");
+		}
 	});
 });
 

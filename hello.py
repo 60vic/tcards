@@ -89,18 +89,20 @@ def save2db():
 	conn = sqlite3.connect('site.db')
 	if not tel and not mob:
 		return jsonify(error='phone not present')
+	'''
 	cur = conn.cursor()
 	cur.execute('SELECT rowid FROM cards WHERE tel = ?',(tel,))
-	if len(cur.fetchall()) > 0:
+	if len(cur.fetchall()) > 0 and tel:
 		return jsonify(error='tel in base')
 	cur.execute('SELECT rowid FROM cards WHERE mob = ?',(mob,))
-	if len(cur.fetchall()) > 0:
+	if len(cur.fetchall()) > 0 and mob:
 		return jsonify(error='mob in base')
+	'''
 	if not fio:
 		return jsonify(error='fio is empty')	
 	conn.execute('INSERT INTO cards VALUES (?,?,?,?,?,?,?,?)',
 	(tel,mob,fio,role,pos,org,org_,soft))
 	conn.commit()
 	conn.close()
-	return jsonify(request.form)
+	return jsonify(error = '0')
 	#return jsonify(result=[mob,tel,fio,role,pos,org,org_,soft])
