@@ -12,7 +12,8 @@ def dict_factory(cursor, row):
 def get_roles():
     a = ['','Страхователь', 'Медучреждение']
     b = ['','Бухгалтер', 'Кадровик', 'Компьютерщик', 'Руководитель']
-    return jsonify(roles=a,positions=b)
+    c = ['','Сертификат юрлица','Сертификат ФСС','Криптопровайдер','АРМ ЛПУ','Оформление']
+    return jsonify(roles=a,positions=b,reqcats=c)
 
 
 @app.route('/_add_numbers')

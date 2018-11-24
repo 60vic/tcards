@@ -32,6 +32,10 @@ body {font-size: 13px;}
 .b3 {width: 25%;}
 .bwrap {height: 50vh;}
 input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
+#slist {border-collapse: collapse;}
+#slist td,#slist th {border-left: 1px solid #1E90FF;border-right: 1px solid #1E90FF;}
+#slist th {border-bottom: 1px solid #1E90FF;}
+#slist td {border-top: 1px solid #1E90FF;}
 </style>
 
 <div class="bwrap">
@@ -50,7 +54,7 @@ input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 <div class="ficap">ПО</div><div class="fi"><input type="text" name="soft"></div>
 </form>
 <div class="ficap"><button title="Сохраняет карточку в базу" id="save2db" disabled>В базу</button><br>
-<button title="Заполняет пустые поля из карточки" disabled>Из карточки</button></div><div class="fi"><br><button id="search2db">Искать</button></div>
+</div><div class="fi"><br><button id="search2db">Искать</button></div>
 </div>
 <div class="b2">
 <h1>Список найденного</h1>
@@ -71,14 +75,20 @@ input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 <div class="ficap">Организация1</div><div class="fi"><input type="text" name="org_" readonly></div>
 <div class="ficap">ПО</div><div class="fi"><input type="text" name="soft" readonly></div>
 </form>
-<div class="ficap"><button id="carddel">Удалить</button></div><div class="fi"><br><button id="card2to1">Добавить в заявление</button></div>
+<div class="ficap"><button id="carddel">Удалить</button></div><div class="fi"><br><button id="card2to1">Перенести карту 1</button></div>
+<div class="ficap"></div><div class="fi"><br><button id="card2req">Перенести в заявление</button></div>
 </div>
 </div>
 </div>	
 <br style="clear: both;">
 <h1>Заявление позвонившего</h1>
-Request<br>
-<div id="asd"></div>
+<form id="form3">
+<table id="reqlist">
+<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
+</table>
+<select name="reqcat"></select><br>
+<textarea></textarea>
+</form>	
 
 <script>
 $.getJSON( "_get_init", function( data ) {
@@ -89,7 +99,10 @@ $.getJSON( "_get_init", function( data ) {
 	$.each(data['positions'], function (k,v) {
 		$('#form1 select[name="pos"]').append("<option name='"+v+"'>"+v+"</option>");
 		$('#form2 select[name="pos"]').append("<option name='"+v+"'>"+v+"</option>");
-		});	
+		});
+	$.each(data['reqcats'], function (k,v) {
+		$('#form3 select[name="reqcat"]').append("<option name='"+v+"'>"+v+"</option>");
+		});		
   });
 
 function notifymy(data) {
@@ -116,13 +129,16 @@ $('#save2db').bind('click', function() {
 	function (data) {
 		notifymy(data);
 	});
+	$.each($("#form2 :input"),function (){
+		$(this).val("")
+	});
 });
 
 
   
 
 //динамически меняем маску для города и районов
-$("#form1 input[name='tel']").on('input', function() {
+$("#form1 input[name='tel']").on('input load', function() {
 	$('#save2db').prop('disabled',true);
 	var v = $("#form1 input[name='tel']").val();
 	$('#asd').text(v);
@@ -152,7 +168,6 @@ $('#carddel').bind('click', function() {
 	$.each($("#form2 :input"),function (){
 		$(this).val("")
 	});
-
 });
 
 
