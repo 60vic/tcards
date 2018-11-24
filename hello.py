@@ -10,7 +10,7 @@ def dict_factory(cursor, row):
 
 @app.route('/_get_init')
 def get_roles():
-    a = ['','Страхователь', 'Медучреждение', 'Иное']
+    a = ['','Страхователь', 'Медучреждение']
     b = ['','Бухгалтер', 'Кадровик', 'Компьютерщик', 'Руководитель']
     return jsonify(roles=a,positions=b)
 
@@ -23,7 +23,25 @@ def add_numbers():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+	return render_template('index.html')
+	conn = sqlite3.connect('site.db')
+	cur = conn.cursor()
+	cur.execute('SELECT rowid,* FROM cards WHERE rowid = ?',
+	(rowid,))
+	result = cur.fetchall()
+	conn.close()
+	return jsonify(result = result)
+	
+@app.route('/carddel', methods = ['POST'])
+def carddel():
+	rowid = int(request.form['rowid'])
+	conn = sqlite3.connect('site.db')
+	conn.row_factory = dict_factory
+	conn.execute('DELETE FROM cards WHERE rowid = ?',
+	(rowid,))
+	conn.commit()
+	conn.close()
+	return jsonify(result = 'ok')
     
 @app.route('/get2rowid', methods = ['POST'])
 def get2rowid():

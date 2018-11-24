@@ -20,20 +20,23 @@
 </script>
 
 <style>
+body {font-size: 13px;}	
 .ficap { padding: 0px; margin: 0px; width: 150px; clear: both; vertical-align: middle; inline-block;}
 .fi, .ficap {float: left;}
-.ficap, .fi input {padding: 5px; margin: 0px;}
+.ficap, .fi,.fi input {padding: 2px; margin: 0px;}
 .b1,.b2,.b3 {border: 1px solid black; float: left; padding: 5px; height: 100%; }
 .b1 {width: 25%;}
 .b2 {width: 46%;}
 .b3 {width: 25%;}
 .bwrap {height: 50vh;}
+input {padding: 2px; margin: 0px; border: 1px solid #1E90FF;}
 </style>
 
 <div class="bwrap">
 <div class="b1">
 <h1>Каточка позвонившего</h1>
 <form id="form1">
+<div class="ficap"><button type="reset">Очистка</button></div>
 <div class="ficap">Телефон</div><div class="fi"><input type="tel" name="tel"></div>
 <div class="ficap">Мобильный</div><div class="fi"><input type="mob" name="mob"></div>
 <div class="ficap">ФИО</div><div class="fi"><input type="text" name="fio"></div>
@@ -65,7 +68,7 @@
 <div class="ficap">Организация1</div><div class="fi"><input type="text" name="org_" readonly></div>
 <div class="ficap">ПО</div><div class="fi"><input type="text" name="soft" disabled></div>
 </form>
-<div class="ficap"><button>Удалить</button></div><div class="fi"><br><button id="card2to1">Добавить в заявление</button></div>
+<div class="ficap"><button id="carddel">Удалить</button></div><div class="fi"><br><button id="card2to1">Добавить в заявление</button></div>
 </div>
 </div>
 </div>	
@@ -117,6 +120,18 @@ $("#form1 input[name='tel']").on('input', function() {
 	{
 		$("#form1 input[name='tel']").mask('+7(81100)0-00-00');
 	}
+});
+
+
+//удаление карточки из базы, а также из спика результатов поиска
+$('#carddel').bind('click', function() {
+	$.post('/carddel', {"rowid": $('#form2 input[name="rowid"]').val()}
+	);
+	$.each($("#slist .drid"), function () {
+		if ( $(this).text() == $('#form2 input[name="rowid"]').val() ) {
+			$(this).parent().remove();	
+		} 
+	});
 });
 
 
