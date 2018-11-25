@@ -24,14 +24,18 @@ def add_numbers():
 
 @app.route('/')
 def index():
-	return render_template('index.html')
-	conn = sqlite3.connect('site.db')
-	cur = conn.cursor()
-	cur.execute('SELECT rowid,* FROM cards WHERE rowid = ?',
-	(rowid,))
-	result = cur.fetchall()
-	conn.close()
-	return jsonify(result = result)
+	fields = [{'name':'Id','type':'input','field':'rowid','edit':False},
+	{'name':'Мобильный','type':'input','field':'mob'},
+	{'name':'Телефон','type':'input','field':'tel'},
+	{'name':'Почта','type':'input','field':'email'},
+	{'name':'ФИО','type':'input','field':'fio'},
+	{'name':'Организация','type':'input','field':'org'},
+	{'name':'Роль','type':'select','field':'role'},
+	{'name':'Должность','type':'select','field':'pos'},
+	{'name':'ПО','type':'input','field':'soft'},
+	{'name':'Заметки','type':'input','field':'etc'}]
+	return render_template('index.html', fields=fields)
+
 	
 @app.route('/carddel', methods = ['POST'])
 def carddel():
