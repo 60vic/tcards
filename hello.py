@@ -2,9 +2,9 @@ from flask import Flask, jsonify, render_template, request
 import sqlite3
 app = Flask(__name__)
 
-card_fields = [{'name':'Id','type':'input','field':'rowid','edit':False},
-{'name':'Мобильный','type':'input','field':'mob'},
+card_fields = [{'name':'Id','type':'input','field':'rowid','edit':False,'db':False},
 {'name':'Телефон','type':'input','field':'tel'},
+{'name':'Мобильный','type':'input','field':'mob'},
 {'name':'Почта','type':'input','field':'email'},
 {'name':'ФИО','type':'input','field':'fio'},
 {'name':'Организация','type':'input','field':'org'},
@@ -61,22 +61,33 @@ def get2rowid():
 	conn.close()
 	return jsonify(result = result)
 
+@app.route('/search2db2', methods = ['POST'])
+def search2db2():
+	st = 'SELECT rowid,tel,mob,fio,org FROM cards WHERE '
+	for p in card_fields:
+		if not 'db' in p:
+			st += p['field'] + ' LIKE ? AND '
+	st = st[:-4]
+	
+	return jsonify(result = st)			
+
 
 @app.route('/search2db', methods = ['POST'])
 def search2db():
 	tel = request.form.get('tel','')
 	mob = request.form.get('mob','')
+	email = request.form.get('email','')
 	fio = request.form.get('fio','')
 	role = request.form.get('role','')
 	pos = request.form.get('pos','')
 	org = request.form.get('org','')
-	org_ = request.form.get('org_','')
 	soft = request.form.get('soft','')
+	etc = request.form.get('etc','')
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND org_ like ? AND soft  like ? LIMIT 10',
-	("%"+tel+"%","%"+mob+"%","%"+fio+"%","%"+role+"%","%"+pos+"%","%"+org+"%","%"+org_+"%","%"+soft+"%"))
+	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND email like ? AND soft  like ? AND etc like ? LIMIT 10',
+	("%"+tel+"%","%"+mob+"%","%"+fio+"%","%"+role+"%","%"+pos+"%","%"+org+"%","%"+email+"%","%"+soft+"%","%"+etc+"%"))
 	result = cur.fetchall()
 	conn.close()
 	return jsonify(result = result)
@@ -89,19 +100,20 @@ def save2db():
 		rowid = int(rowid)
 	tel = request.form.get('tel','')
 	mob = request.form.get('mob','')
+	email = request.form.get('email','')
 	fio = request.form.get('fio','')
 	role = request.form.get('role','')
 	pos = request.form.get('pos','')
 	org = request.form.get('org','')
-	org_ = request.form.get('org_','')
 	soft = request.form.get('soft','')
+	etc = request.form.get('etc','')
 	conn = sqlite3.connect('site.db')
 	if not tel and not mob:
 		return jsonify(reply={'error': 'phone not present'})
 	if not fio:
 		return jsonify(reply={'error': 'fio is empty'})	
 	if rowid:
-		conn.execute('UPDATE cards SET tel = ?, mob = ?, fio = ?,role = ?, pos = ?,org = ?,org_ = ?,soft = ? WHERE rowid = ?',(tel,mob,fio,role,pos,org,org_,soft,rowid))
+		conn.execute('UPDATE cards SET tel = ?, mob = ?, fio = ?,role = ?, pos = ?,org = ?,email = ?,soft = ?,etc = ? WHERE rowid = ?',(tel,mob,fio,role,pos,org,email,soft,etc,rowid))
 		conn.commit()
 		return jsonify(reply={'good': 'card updated'})
 	else:
@@ -112,7 +124,7 @@ def save2db():
 		cur.execute('SELECT rowid FROM cards WHERE mob = ?',(mob,))
 		if mob and len(cur.fetchall()) > 0:
 			return jsonify(reply={'error': 'mob in base, load a card'})
-		conn.execute('INSERT INTO cards VALUES (?,?,?,?,?,?,?,?)',(tel,mob,fio,role,pos,org,org_,soft))
+		conn.execute('INSERT INTO cards (tel,mob,email,fio,role,pos,org,soft,etc) VALUES (?,?,?,?,?,?,?,?,?)',(tel,mob,email,fio,role,pos,org,soft,etc))
 		conn.commit()
 		return jsonify(reply={'good': 'card added'})
 	conn.close()
