@@ -24,7 +24,7 @@
 		<div class="col-lg-12" style="background-color:lavender;">
 		  <ul class="nav nav-pills" role="tablist">
 		    <li class="nav-item">
-		      <a class="nav-link active" data-toggle="pill" href="#home">Заявители</a>
+		      <a class="nav-link active" data-toggle="pill" href="#home">Контакты</a>
 		    </li>
 		    <li class="nav-item">
 		      <a class="nav-link" data-toggle="pill" href="#menu1">Заявления</a>
@@ -32,98 +32,99 @@
 		  </ul>		
 		</div>
 	</div>
-	<div class="tab-content">
-		<div class="tab-pane container-fluid active" id="home">
-			<!--row1-->
-			<div class="row">
-				<div class="col-lg-3" style="background-color:lavender;">
-					<h1>Карточка</h1>
-					<form id="form1" class="form-horizontal">
-						<div class="form-group row">
-							<div class="col-sm-12">
-								<button type="reset" class="btn btn-default">Очистка</button>
-							</div>	
-						</div>
-						{# поля формы 1 #}
-						{% for item in fields %}
-						<div class="form-group row">
-							<label class="col-sm-3 col-form-label">{{ item.name }}:</label>
-							<div class="col-sm-9">
-							{% if item.type == 'input' %}
-								<input type="text" class="form-control form-control-sm autocomplete" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
-							{% endif %}	
-							{% if item.type == 'select' %}
-								<select class="custom-select" name="{{ item.field }} ">
-								{% for sitem in item.select_items  %}
-									<option name="{{ sitem }}">{{ sitem }}</option>
-								{% endfor %}
-								</select>
-							{% endif %}	
-							</div>	
-						</div>
-						{% endfor %}
-						<div class="form-group row">
-							<div class="col-sm-6">
-								<button title="Сохраняет карточку в базу" class="btn btn-default" id="save2db" type="button">В базу</button>
-							</div>	
-							<div class="col-sm-6">
-								<button id="search2db" class="btn btn-default" type="button">Искать</button>
-							</div>	
-						</div>
-					</form>
-				</div>	
-				<div class="col-lg-6" style="background-color:lavender;">
-					<h1>Список найденного</h1>
-					<table id="slist" class="table">
-					<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
-					</table>
-				</div>
-				<div class="col-lg-3" style="background-color:lavender;">
-					<h1>Карточка в базе</h1>
-					<form id="form2" class="form-horizontal">
-						{# поля формы 2 #}
-						{% for item in fields %}
-						<div class="form-group row">
-							<label class="col-sm-3 col-form-label">{{ item.name }}:</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control form-control-sm" name="{{ item.field }}" readonly>
-							</div>	
-						</div>
-						{% endfor %}
-						<div class="form-group row">
-							<div class="col-sm-4">
-								<button id="carddel" class="btn btn-default" type="button">Удалить</button>
-							</div>	
-							<div class="col-sm-4">
-								<button id="card2to1" class="btn btn-default" type="button">В карточку</button>
-							</div>	
-							<div class="col-sm-4">
-								<button id="card2req" class="btn btn-default" type="button">В заявление</button>
-							</div>	
-						</div>
-					</form>
-				</div>
-			</div>
-			<!--row1 end-->
-		</div>
-		<div class="tab-pane container-fluid" id="menu1">
-			<!--row2-->
-			<div class="row">
-				<div class="col-lg-12" style="background-color:lavender;">
-					<h1>Заявление позвонившего</h1>
-					<form id="form3">
-						<table id="reqlist">
-							<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
-						</table>
-						<select name="reqcat"></select><br>
-						<textarea></textarea>
-					</form>				
-				</div>
-			</div>
-			<!--row2 end-->
-		</div>		
-	</div>	
 </div>
+<div class="tab-content">
+	<div class="tab-pane container-fluid active" id="home">
+		<!--row1-->
+		<div class="row">
+			<div class="col-lg-3" style="background-color:lavender;">
+				<h1>Карточка</h1>
+				<form id="form1" class="form-horizontal">
+					<div class="form-group row">
+						<div class="col-sm-12">
+							<button type="reset" class="btn btn-default">Очистка</button>
+						</div>	
+					</div>
+					{# поля формы 1 #}
+					{% for item in fields %}
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">{{ item.name }}:</label>
+						<div class="col-sm-9">
+						{% if item.type == 'input' %}
+							<input type="text" class="form-control form-control-sm autocomplete" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
+						{% endif %}	
+						{% if item.type == 'select' %}
+							<select class="custom-select" name="{{ item.field }} ">
+							{% for sitem in item.select_items  %}
+								<option name="{{ sitem }}">{{ sitem }}</option>
+							{% endfor %}
+							</select>
+						{% endif %}	
+						</div>	
+					</div>
+					{% endfor %}
+					<div class="form-group row">
+						<div class="col-sm-6">
+							<button title="Сохраняет карточку в базу" class="btn btn-default" id="save2db" type="button">В базу</button>
+						</div>	
+						<div class="col-sm-6">
+							<button id="search2db" class="btn btn-default" type="button">Искать</button>
+						</div>	
+					</div>
+				</form>
+			</div>	
+			<div class="col-lg-6" style="background-color:lavender;">
+				<h1>Список найденного</h1>
+				<table id="slist" class="table">
+				<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
+				</table>
+			</div>
+			<div class="col-lg-3" style="background-color:lavender;">
+				<h1>Карточка в базе</h1>
+				<form id="form2" class="form-horizontal">
+					{# поля формы 2 #}
+					{% for item in fields %}
+					<div class="form-group row">
+						<label class="col-sm-3 col-form-label">{{ item.name }}:</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control form-control-sm" name="{{ item.field }}" readonly>
+						</div>	
+					</div>
+					{% endfor %}
+					<div class="form-group row">
+						<div class="col-sm-4">
+							<button id="carddel" class="btn btn-default" type="button">Удалить</button>
+						</div>	
+						<div class="col-sm-4">
+							<button id="card2to1" class="btn btn-default" type="button">В карточку</button>
+						</div>	
+						<div class="col-sm-4">
+							<button id="card2req" class="btn btn-default" type="button">В заявление</button>
+						</div>	
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--row1 end-->
+	</div>
+	<div class="tab-pane container-fluid" id="menu1">
+		<!--row2-->
+		<div class="row">
+			<div class="col-lg-12" style="background-color:lavender;">
+				<h1>Заявление позвонившего</h1>
+				<form id="form3">
+					<table id="reqlist">
+						<tr><th>id</th><th>tel</th><th>mob</th><th>fio</th><th>org</th></tr>
+					</table>
+					<select name="reqcat"></select><br>
+					<textarea></textarea>
+				</form>				
+			</div>
+		</div>
+		<!--row2 end-->
+	</div>		
+</div>	
+
 
 
 
