@@ -61,16 +61,20 @@ def get2rowid():
 	conn.close()
 	return jsonify(result = result)
 
-@app.route('/search2db2', methods = ['POST'])
-def search2db2():
-	st = 'SELECT rowid,tel,mob,fio,org FROM cards WHERE '
-	for p in card_fields:
-		if not 'db' in p:
-			st += p['field'] + ' LIKE ? AND '
-	st = st[:-4]
-	
-	return jsonify(result = st)			
-
+@app.route('/orgauto')
+def orgauto():
+	term = request.args.get('term').upper()
+	conn = sqlite3.connect('site.db')
+	conn.row_factory = dict_factory
+	cur = conn.cursor()
+	cur.execute('SELECT org FROM cards WHERE org LIKE ? LIMIT 20',
+	("%"+term+"%",))
+	result = cur.fetchall()
+	conn.close()
+	result1 = []
+	for p in result:
+		result1.append(p['org'])	
+	return jsonify(result1)			
 
 @app.route('/search2db', methods = ['POST'])
 def search2db():
@@ -86,7 +90,7 @@ def search2db():
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND email like ? AND soft  like ? AND etc like ? LIMIT 10 COLLATE NOCASE',
+	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND email like ? AND soft  like ? AND etc like ? LIMIT 10',
 	("%"+tel+"%","%"+mob+"%","%"+fio+"%","%"+role+"%","%"+pos+"%","%"+org+"%","%"+email+"%","%"+soft+"%","%"+etc+"%"))
 	result = cur.fetchall()
 	conn.close()

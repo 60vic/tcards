@@ -12,7 +12,9 @@
 <script type = "text/javascript" 
          src = "{{ url_for('static', filename = 'js/bootstrap.min.js') }}" ></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/my.css') }}">
+
 </head>
 
 <div class="container-fluid">
@@ -31,10 +33,10 @@
 					<label class="col-sm-3 col-form-label">{{ item.name }}:</label>
 					<div class="col-sm-9">
 					{% if item.type == 'input' %}
-						<input type="text" class="form-control form-control-sm" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
+						<input type="text" class="form-control form-control-sm autocomplete" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
 					{% endif %}	
 					{% if item.type == 'select' %}
-						<select class="custom-select" name="{{ item.field }}">
+						<select class="custom-select" name="{{ item.field }} ">
 						{% for sitem in item.select_items  %}
 							<option name="{{ sitem }}">{{ sitem }}</option>
 						{% endfor %}

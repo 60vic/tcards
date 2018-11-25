@@ -1,3 +1,10 @@
+$( function() {
+	$( "#form1 input[name='org']" ).autocomplete({
+		source: "orgauto",
+		minLength: 2
+	});
+});
+
 //вспомогательные функции
 function notifymy(data) {
 	if (data['reply']['error']) {
