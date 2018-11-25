@@ -54,7 +54,7 @@
 							<input type="text" class="form-control form-control-sm autocomplete" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
 						{% endif %}	
 						{% if item.type == 'select' %}
-							<select class="custom-select" name="{{ item.field }} ">
+							<select class="custom-select" name="{{ item.field }}">
 							{% for sitem in item.select_items  %}
 								<option name="{{ sitem }}">{{ sitem }}</option>
 							{% endfor %}

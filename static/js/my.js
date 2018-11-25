@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 //сохранение
 $('#save2db').bind('click', function() {
+	alert($('#form1').serialize());
 	$.post('/save2db',
 	$('#form1').serialize(), 
 	function (data) {
