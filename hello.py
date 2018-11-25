@@ -2,6 +2,17 @@ from flask import Flask, jsonify, render_template, request
 import sqlite3
 app = Flask(__name__)
 
+card_fields = [{'name':'Id','type':'input','field':'rowid','edit':False},
+{'name':'Мобильный','type':'input','field':'mob'},
+{'name':'Телефон','type':'input','field':'tel'},
+{'name':'Почта','type':'input','field':'email'},
+{'name':'ФИО','type':'input','field':'fio'},
+{'name':'Организация','type':'input','field':'org'},
+{'name':'Роль','type':'select','field':'role','select_items':['','Страхователь', 'Медучреждение']},
+{'name':'Должность','type':'select','field':'pos','select_items':['','Бухгалтер', 'Кадровик', 'Компьютерщик', 'Руководитель']},
+{'name':'ПО','type':'input','field':'soft'},
+{'name':'Заметки','type':'input','field':'etc'}]
+
 def dict_factory(cursor, row):
     d = {}
     for idx, col in enumerate(cursor.description):
@@ -24,17 +35,7 @@ def add_numbers():
 
 @app.route('/')
 def index():
-	fields = [{'name':'Id','type':'input','field':'rowid','edit':False},
-	{'name':'Мобильный','type':'input','field':'mob'},
-	{'name':'Телефон','type':'input','field':'tel'},
-	{'name':'Почта','type':'input','field':'email'},
-	{'name':'ФИО','type':'input','field':'fio'},
-	{'name':'Организация','type':'input','field':'org'},
-	{'name':'Роль','type':'select','field':'role'},
-	{'name':'Должность','type':'select','field':'pos'},
-	{'name':'ПО','type':'input','field':'soft'},
-	{'name':'Заметки','type':'input','field':'etc'}]
-	return render_template('index.html', fields=fields)
+	return render_template('index.html', fields=card_fields)
 
 	
 @app.route('/carddel', methods = ['POST'])

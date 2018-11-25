@@ -1,19 +1,3 @@
-//начальная инициализация
-$.getJSON( "_get_init", function( data ) {
-	$.each(data['roles'], function (k,v) {
-		$('#form1 select[name="role"]').append("<option name='"+v+"'>"+v+"</option>");
-		$('#form2 select[name="role"]').append("<option name='"+v+"'>"+v+"</option>");
-		});
-	$.each(data['positions'], function (k,v) {
-		$('#form1 select[name="pos"]').append("<option name='"+v+"'>"+v+"</option>");
-		$('#form2 select[name="pos"]').append("<option name='"+v+"'>"+v+"</option>");
-		});
-	$.each(data['reqcats'], function (k,v) {
-		$('#form3 select[name="reqcat"]').append("<option name='"+v+"'>"+v+"</option>");
-		});		
-  });
-
-
 //вспомогательные функции
 function notifymy(data) {
 	if (data['reply']['error']) {

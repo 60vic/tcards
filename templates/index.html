@@ -36,7 +36,11 @@
 						<input type="text" class="form-control form-control-sm" name="{{ item.field }}" {% if item.edit == False %}readonly{% endif %}>
 					{% endif %}	
 					{% if item.type == 'select' %}
-						<select class="custom-select" name="{{ item.field }}"></select>
+						<select class="custom-select" name="{{ item.field }}">
+						{% for sitem in item.select_items  %}
+							<option name="{{ sitem }}">{{ sitem }}</option>
+						{% endfor %}
+						</select>
 					{% endif %}	
 					</div>	
 				</div>
