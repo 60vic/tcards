@@ -40,7 +40,6 @@ $('#save2db').bind('click', function() {
 
 //динамически меняем маску для города и районов
 $("#form1 input[name='tel']").on('input load', function() {
-	$('#save2db').prop('disabled',true);
 	var v = $("#form1 input[name='tel']").val();
 	$('#asd').text(v);
 	if ( v.slice(0,7) == "+7(8112" )
@@ -102,5 +101,4 @@ $('#search2db').bind('click', function() {
 			});
 		});
 	});
-	$('#save2db').removeAttr('disabled');
 });

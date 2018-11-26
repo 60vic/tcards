@@ -8,8 +8,8 @@ card_fields = [{'name':'Id','type':'input','field':'rowid','edit':False,'db':Fal
 {'name':'Почта','type':'input','field':'email'},
 {'name':'ФИО','type':'input','field':'fio'},
 {'name':'Организация','type':'input','field':'org'},
-{'name':'Роль','type':'select','field':'role','select_items':['','Страхователь', 'Медучреждение']},
-{'name':'Должность','type':'select','field':'pos','select_items':['','Бухгалтер', 'Кадровик', 'Компьютерщик', 'Руководитель']},
+{'name':'Роль','type':'select','field':'role','select_items':['','Страхователь', 'Медучреждение','Разработчик, ТП']},
+{'name':'Должность','type':'select','field':'pos','select_items':['','Бухгалтер', 'Кадровик', 'Компьютерщик', 'Руководитель','Регистратура']},
 {'name':'ПО','type':'input','field':'soft'},
 {'name':'Заметки','type':'input','field':'etc'}]
 
