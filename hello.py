@@ -67,7 +67,7 @@ def orgauto():
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT org FROM cards WHERE org LIKE ? LIMIT 20',
+	cur.execute('SELECT org FROM cards WHERE org LIKE ? GROUP BY org ORDER BY org  LIMIT 20',
 	("%"+term+"%",))
 	result = cur.fetchall()
 	conn.close()
@@ -90,7 +90,7 @@ def search2db():
 	conn = sqlite3.connect('site.db')
 	conn.row_factory = dict_factory
 	cur = conn.cursor()
-	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND email like ? AND soft  like ? AND etc like ? LIMIT 10',
+	cur.execute('SELECT rowid,tel,mob,fio,org FROM cards WHERE tel like ? AND mob like ? AND fio  like ? AND role  like ? AND pos  like ? AND org like ? AND email like ? AND soft  like ? AND etc like ? LIMIT 20',
 	("%"+tel+"%","%"+mob+"%","%"+fio+"%","%"+role+"%","%"+pos+"%","%"+org+"%","%"+email+"%","%"+soft+"%","%"+etc+"%"))
 	result = cur.fetchall()
 	conn.close()
